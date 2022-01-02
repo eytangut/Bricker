@@ -45,14 +45,14 @@ public class BrickerGameManager extends GameManager{
         GameObject background = new GameObject(Vector2.ZERO, windowController.getWindowDimensions(), imageReader.readImage("assets/BG.jpeg", false));
         gameObjects().addGameObject(background, Layer.BACKGROUND);
         // add bricks
-        Brick brick = new Brick(new Vector2(0, 0), new Vector2(1100, 15), imageReader.readImage("assets/brick.png", false), new CollisionStrategy());
-        gameObjects().addGameObject(brick, Layer.DEFAULT);
+        Brick brick = new Brick(new Vector2(0, 0), new Vector2(1100, 15), imageReader.readImage("assets/brick.png", false), new CollisionStrategy(gameObjects()));
+        gameObjects().addGameObject(brick, Layer.STATIC_OBJECTS);
 
     }
     private void createBorders(Vector2 windowDimensions){
-        gameObjects().addGameObject(new GameObject(Vector2.ZERO, new Vector2(10, windowDimensions.y()), null));
-        gameObjects().addGameObject(new GameObject(new Vector2(1040,0), new Vector2(10, windowDimensions.y()), null));
-        gameObjects().addGameObject(new GameObject(new Vector2(0,0), new Vector2(windowDimensions.x(), 10), null));
+        gameObjects().addGameObject(new GameObject(Vector2.ZERO, new Vector2(10, windowDimensions.y()), null), Layer.STATIC_OBJECTS);
+        gameObjects().addGameObject(new GameObject(new Vector2(1040,0), new Vector2(10, windowDimensions.y()), null), Layer.STATIC_OBJECTS);
+        gameObjects().addGameObject(new GameObject(new Vector2(0,0), new Vector2(windowDimensions.x(), 10), null), Layer.STATIC_OBJECTS);
 
     }
 
