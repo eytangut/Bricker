@@ -3,6 +3,7 @@ import danogl.GameObject;
 import danogl.collisions.Layer;
 import danogl.gui.*;
 import danogl.gui.rendering.Renderable;
+import danogl.util.Counter;
 import danogl.util.Vector2;
 import gameobjects.*;
 import java.util.Random;
@@ -10,6 +11,8 @@ import gameobjects.brick_strategies.CollisionStrategy;
 
 public class BrickerGameManager extends GameManager{
     private Ball ball;
+    private WindowController windowController;
+    Counter brickNum = new Counter();
 
     public BrickerGameManager(String windowTitle, Vector2 windowDimensions){
         super(windowTitle, windowDimensions);
@@ -17,7 +20,9 @@ public class BrickerGameManager extends GameManager{
 
     @Override
     public void initializeGame(ImageReader imageReader, SoundReader soundReader, UserInputListener inputListener, WindowController windowController) {
+        this.windowController = windowController;
         super.initializeGame(imageReader, soundReader, inputListener, windowController);
+        brickNum.increaseBy(63);
         // add ball
         Renderable ballImage =
                 imageReader.readImage("assets/ball.png", true);
@@ -42,6 +47,32 @@ public class BrickerGameManager extends GameManager{
         // add bricks
         addBricks(imageReader, windowDimensions);
 
+    }
+
+    @Override
+    public void update(float deltaTime) {
+        super.update(deltaTime);
+        checkWonOrLost();
+    }
+
+    private void checkWonOrLost() {
+        double ballHeight = ball.getCenter().y();
+        String prompt = "";
+
+        if(brickNum.value() ==0){
+            prompt = "You Won! :) :)";
+        }
+        if (ballHeight > 900){
+            prompt = "You Lost! :( :(";
+        }
+        if (!prompt.isEmpty()){
+            prompt+="\nPlay Again?";
+            if(windowController.openYesNoDialog(prompt)){
+                windowController.resetGame();
+            }
+            else {windowController.closeWindow();}
+
+        }
     }
 
     private void addPaddle(ImageReader imageReader, UserInputListener inputListener, WindowController windowController, Vector2 windowDimensions) {
@@ -71,7 +102,7 @@ public class BrickerGameManager extends GameManager{
         int i = 0;
         while (i < 9){
             float x = (float) (5+1+(120.5*i));
-            Brick brick = new Brick(new Vector2(x, 93), new Vector2((windowDimensions.x()/8)-17, 20), imageReader.readImage("assets/brick.png", false), new CollisionStrategy(gameObjects()));
+            Brick brick = new Brick(new Vector2(x, 93), new Vector2((windowDimensions.x()/8)-17, 20), imageReader.readImage("assets/brick.png", false), new CollisionStrategy(gameObjects()), brickNum);
             gameObjects().addGameObject(brick, Layer.STATIC_OBJECTS);
             i++;
         }
@@ -80,7 +111,7 @@ public class BrickerGameManager extends GameManager{
         int i = 0;
         while (i < 9){
             float x = (float) (5+1+(120.5*i));
-            Brick brick = new Brick(new Vector2(x, 115), new Vector2((windowDimensions.x()/8)-17, 20), imageReader.readImage("assets/brick.png", false), new CollisionStrategy(gameObjects()));
+            Brick brick = new Brick(new Vector2(x, 115), new Vector2((windowDimensions.x()/8)-17, 20), imageReader.readImage("assets/brick.png", false), new CollisionStrategy(gameObjects()), brickNum);
             gameObjects().addGameObject(brick, Layer.STATIC_OBJECTS);
             i++;
         }
@@ -89,7 +120,7 @@ public class BrickerGameManager extends GameManager{
         int i = 0;
         while (i < 9){
             float x = (float) (5+1+(120.5*i));
-            Brick brick = new Brick(new Vector2(x, 137), new Vector2((windowDimensions.x()/8)-17, 20), imageReader.readImage("assets/brick.png", false), new CollisionStrategy(gameObjects()));
+            Brick brick = new Brick(new Vector2(x, 137), new Vector2((windowDimensions.x()/8)-17, 20), imageReader.readImage("assets/brick.png", false), new CollisionStrategy(gameObjects()), brickNum);
             gameObjects().addGameObject(brick, Layer.STATIC_OBJECTS);
             i++;
         }
@@ -99,7 +130,7 @@ public class BrickerGameManager extends GameManager{
         int i = 0;
         while (i < 9){
             float x = (float) (5+1+(120.5*i));
-            Brick brick = new Brick(new Vector2(x, 71), new Vector2((windowDimensions.x()/8)-17, 20), imageReader.readImage("assets/brick.png", false), new CollisionStrategy(gameObjects()));
+            Brick brick = new Brick(new Vector2(x, 71), new Vector2((windowDimensions.x()/8)-17, 20), imageReader.readImage("assets/brick.png", false), new CollisionStrategy(gameObjects()), brickNum);
             gameObjects().addGameObject(brick, Layer.STATIC_OBJECTS);
             i++;
         }
@@ -109,7 +140,7 @@ public class BrickerGameManager extends GameManager{
         int i = 0;
         while (i < 9){
             float x = (float) (5+1+(120.5*i));
-            Brick brick = new Brick(new Vector2(x, 49), new Vector2((windowDimensions.x()/8)-17, 20), imageReader.readImage("assets/brick.png", false), new CollisionStrategy(gameObjects()));
+            Brick brick = new Brick(new Vector2(x, 49), new Vector2((windowDimensions.x()/8)-17, 20), imageReader.readImage("assets/brick.png", false), new CollisionStrategy(gameObjects()), brickNum);
             gameObjects().addGameObject(brick, Layer.STATIC_OBJECTS);
             i++;
         }
@@ -119,7 +150,7 @@ public class BrickerGameManager extends GameManager{
         int i = 0;
         while (i < 9){
             float x = (float) (5+1+(120.5*i));
-            Brick brick = new Brick(new Vector2(x, 27), new Vector2((windowDimensions.x()/8)-17, 20), imageReader.readImage("assets/brick.png", false), new CollisionStrategy(gameObjects()));
+            Brick brick = new Brick(new Vector2(x, 27), new Vector2((windowDimensions.x()/8)-17, 20), imageReader.readImage("assets/brick.png", false), new CollisionStrategy(gameObjects()), brickNum);
             gameObjects().addGameObject(brick, Layer.STATIC_OBJECTS);
             i++;
         }
@@ -129,7 +160,7 @@ public class BrickerGameManager extends GameManager{
         int i = 0;
         while (i < 9){
             float x = (float) (5+2+(120.5*i));
-            Brick brick = new Brick(new Vector2(x, 5), new Vector2((windowDimensions.x()/8)-17, 20), imageReader.readImage("assets/brick.png", false), new CollisionStrategy(gameObjects()));
+            Brick brick = new Brick(new Vector2(x, 5), new Vector2((windowDimensions.x()/8)-17, 20), imageReader.readImage("assets/brick.png", false), new CollisionStrategy(gameObjects()), brickNum);
             gameObjects().addGameObject(brick, Layer.STATIC_OBJECTS);
             i++;
         }

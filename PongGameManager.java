@@ -15,6 +15,7 @@ public class PongGameManager extends GameManager{
 
     private static final int BALL_SPEED = 300;
     private Ball ball;
+    private WindowController windowController;
 
     public PongGameManager(String windowTitle, Vector2 windowDimensions){
         super(windowTitle, windowDimensions);
@@ -22,6 +23,7 @@ public class PongGameManager extends GameManager{
 
     @Override
     public void initializeGame(ImageReader imageReader, SoundReader soundReader, UserInputListener inputListener, WindowController windowController) {
+        this.windowController = windowController;
         super.initializeGame(imageReader, soundReader, inputListener, windowController);
         // add ball
         Renderable ballImage =
@@ -51,6 +53,33 @@ public class PongGameManager extends GameManager{
         addBg(imageReader, windowController);
 
 
+    }
+
+    @Override
+    public void update(float deltaTime) {
+        super.update(deltaTime);
+        checkWonOrLost();
+
+
+    }
+
+    private void checkWonOrLost() {
+        double ballHeight = ball.getCenter().y();
+        String prompt = "";
+        if(ballHeight < 0 ){
+            prompt = "You Won! :) :)";
+        }
+        if (ballHeight > 900){
+          prompt = "You Lost! :( :(";
+        }
+        if (!prompt.isEmpty()){
+            prompt+="\nPlay Again?";
+            if(windowController.openYesNoDialog(prompt)){
+                windowController.resetGame();
+            }
+            else {windowController.closeWindow();}
+
+        }
     }
 
     private void addUserPaddle(UserInputListener inputListener, WindowController windowController, Vector2 windowDimensions, Renderable paddleImage) {

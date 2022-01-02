@@ -2,6 +2,7 @@ package gameobjects.brick_strategies;
 import danogl.GameObject;
 import danogl.collisions.GameObjectCollection;
 import danogl.collisions.Layer;
+import danogl.util.Counter;
 
 public class CollisionStrategy {
     private GameObjectCollection objects;
@@ -10,7 +11,8 @@ public class CollisionStrategy {
 
         this.objects = objects;
     }
-    public void onCollision(GameObject thisObj, GameObject otherObj) {
+    public void onCollision(GameObject thisObj, GameObject otherObj, Counter count) {
         objects.removeGameObject(thisObj, Layer.STATIC_OBJECTS);
+        count.decrement();
     }
 }
