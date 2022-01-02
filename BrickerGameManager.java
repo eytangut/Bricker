@@ -36,19 +36,105 @@ public class BrickerGameManager extends GameManager{
         ball.setCenter(windowDimensions.mult(0.5f));
         gameObjects().addGameObject(ball);
         // add paddle
+        addPaddle(imageReader, inputListener, windowController, windowDimensions);
+        // add BG
+        addBG(imageReader, windowController);
+        // add bricks
+        addBricks(imageReader, windowDimensions);
+
+    }
+
+    private void addPaddle(ImageReader imageReader, UserInputListener inputListener, WindowController windowController, Vector2 windowDimensions) {
         Renderable paddleImage = imageReader.readImage("assets/paddle.png", true);
         GameObject paddle = new UserPaddle(Vector2.ZERO, new Vector2(100, 15), paddleImage, inputListener, windowController.getWindowDimensions());
         paddle.setCenter(new Vector2(windowDimensions.x()/2, windowDimensions.y()-25));
         gameObjects().addGameObject(paddle);
         createBorders(windowDimensions);
-        // add BG
+    }
+
+    private void addBG(ImageReader imageReader, WindowController windowController) {
         GameObject background = new GameObject(Vector2.ZERO, windowController.getWindowDimensions(), imageReader.readImage("assets/BG.jpeg", false));
         gameObjects().addGameObject(background, Layer.BACKGROUND);
-        // add bricks
-        Brick brick = new Brick(new Vector2(0, 0), new Vector2(1100, 15), imageReader.readImage("assets/brick.png", false), new CollisionStrategy(gameObjects()));
-        gameObjects().addGameObject(brick, Layer.STATIC_OBJECTS);
-
     }
+
+    private void addBricks(ImageReader imageReader, Vector2 windowDimensions) {
+        addBrickRow1(imageReader, windowDimensions);
+        addBrickRow2(imageReader, windowDimensions);
+        addBrickRow3(imageReader, windowDimensions);
+        addBrickRow4(imageReader, windowDimensions);
+        addBrickRow5(imageReader, windowDimensions);
+        addBrickRow6(imageReader, windowDimensions);
+        addBrickRow7(imageReader, windowDimensions);
+    }
+
+    private void addBrickRow5(ImageReader imageReader, Vector2 windowDimensions) {
+        int i = 0;
+        while (i < 9){
+            float x = (float) (5+1+(120.5*i));
+            Brick brick = new Brick(new Vector2(x, 93), new Vector2((windowDimensions.x()/8)-17, 20), imageReader.readImage("assets/brick.png", false), new CollisionStrategy(gameObjects()));
+            gameObjects().addGameObject(brick, Layer.STATIC_OBJECTS);
+            i++;
+        }
+    }
+    private void addBrickRow6(ImageReader imageReader, Vector2 windowDimensions) {
+        int i = 0;
+        while (i < 9){
+            float x = (float) (5+1+(120.5*i));
+            Brick brick = new Brick(new Vector2(x, 115), new Vector2((windowDimensions.x()/8)-17, 20), imageReader.readImage("assets/brick.png", false), new CollisionStrategy(gameObjects()));
+            gameObjects().addGameObject(brick, Layer.STATIC_OBJECTS);
+            i++;
+        }
+    }
+    private void addBrickRow7(ImageReader imageReader, Vector2 windowDimensions) {
+        int i = 0;
+        while (i < 9){
+            float x = (float) (5+1+(120.5*i));
+            Brick brick = new Brick(new Vector2(x, 137), new Vector2((windowDimensions.x()/8)-17, 20), imageReader.readImage("assets/brick.png", false), new CollisionStrategy(gameObjects()));
+            gameObjects().addGameObject(brick, Layer.STATIC_OBJECTS);
+            i++;
+        }
+    }
+
+    private void addBrickRow4(ImageReader imageReader, Vector2 windowDimensions) {
+        int i = 0;
+        while (i < 9){
+            float x = (float) (5+1+(120.5*i));
+            Brick brick = new Brick(new Vector2(x, 71), new Vector2((windowDimensions.x()/8)-17, 20), imageReader.readImage("assets/brick.png", false), new CollisionStrategy(gameObjects()));
+            gameObjects().addGameObject(brick, Layer.STATIC_OBJECTS);
+            i++;
+        }
+    }
+
+    private void addBrickRow3(ImageReader imageReader, Vector2 windowDimensions) {
+        int i = 0;
+        while (i < 9){
+            float x = (float) (5+1+(120.5*i));
+            Brick brick = new Brick(new Vector2(x, 49), new Vector2((windowDimensions.x()/8)-17, 20), imageReader.readImage("assets/brick.png", false), new CollisionStrategy(gameObjects()));
+            gameObjects().addGameObject(brick, Layer.STATIC_OBJECTS);
+            i++;
+        }
+    }
+
+    private void addBrickRow2(ImageReader imageReader, Vector2 windowDimensions) {
+        int i = 0;
+        while (i < 9){
+            float x = (float) (5+1+(120.5*i));
+            Brick brick = new Brick(new Vector2(x, 27), new Vector2((windowDimensions.x()/8)-17, 20), imageReader.readImage("assets/brick.png", false), new CollisionStrategy(gameObjects()));
+            gameObjects().addGameObject(brick, Layer.STATIC_OBJECTS);
+            i++;
+        }
+    }
+
+    private void addBrickRow1(ImageReader imageReader, Vector2 windowDimensions) {
+        int i = 0;
+        while (i < 9){
+            float x = (float) (5+2+(120.5*i));
+            Brick brick = new Brick(new Vector2(x, 5), new Vector2((windowDimensions.x()/8)-17, 20), imageReader.readImage("assets/brick.png", false), new CollisionStrategy(gameObjects()));
+            gameObjects().addGameObject(brick, Layer.STATIC_OBJECTS);
+            i++;
+        }
+    }
+
     private void createBorders(Vector2 windowDimensions){
         gameObjects().addGameObject(new GameObject(Vector2.ZERO, new Vector2(10, windowDimensions.y()), null), Layer.STATIC_OBJECTS);
         gameObjects().addGameObject(new GameObject(new Vector2(1040,0), new Vector2(10, windowDimensions.y()), null), Layer.STATIC_OBJECTS);
