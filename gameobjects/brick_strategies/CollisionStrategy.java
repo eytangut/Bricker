@@ -4,7 +4,7 @@ import danogl.GameObject;
 
 public class CollisionStrategy {
 
-    void onCollision(GameObject thisObj, GameObject otherObj) {
+    public void onCollision(GameObject thisObj, GameObject otherObj) {
         System.out.println("collision with brick detectet");
     }
 }

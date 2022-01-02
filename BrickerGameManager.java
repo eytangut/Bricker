@@ -6,6 +6,7 @@ import danogl.gui.rendering.Renderable;
 import danogl.util.Vector2;
 import gameobjects.*;
 import java.util.Random;
+import gameobjects.brick_strategies.CollisionStrategy;
 
 public class BrickerGameManager extends GameManager{
     private Ball ball;
@@ -44,7 +45,7 @@ public class BrickerGameManager extends GameManager{
         GameObject background = new GameObject(Vector2.ZERO, windowController.getWindowDimensions(), imageReader.readImage("assets/BG.jpeg", false));
         gameObjects().addGameObject(background, Layer.BACKGROUND);
         // add bricks
-        Brick brick = new Brick(new Vector2(0, 0), new Vector2(1100, 15), imageReader.readImage("assets/brick.png", false));
+        Brick brick = new Brick(new Vector2(0, 0), new Vector2(1100, 15), imageReader.readImage("assets/brick.png", false), new CollisionStrategy());
         gameObjects().addGameObject(brick, Layer.DEFAULT);
 
     }
