@@ -4,7 +4,7 @@ import danogl.collisions.GameObjectCollection;
 import danogl.collisions.Layer;
 import danogl.util.Counter;
 
-public class CollisionStrategy {
+public class CollisionStrategy implements BrickStrategy{
     private GameObjectCollection objects;
 
     public CollisionStrategy(GameObjectCollection objects){
